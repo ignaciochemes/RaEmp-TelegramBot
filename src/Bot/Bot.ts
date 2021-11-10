@@ -1,5 +1,6 @@
 import { Telegraf } from 'telegraf';
-import { HelpCommand } from '../Commands/HelpCommand';
+import { WelcomeMessage } from '../Commands/HelpCommand';
+import { CommandsConstants } from '../Constants/CommandsConstants';
 
 export class TelegramBot {
     private static _instance: TelegramBot;
@@ -16,9 +17,18 @@ export class TelegramBot {
     async startTelegramBot() {
         const BOT = new Telegraf(`${process.env.BOT_TOKEN}`);
         BOT.help(ctx => {
-            let response = HelpCommand();
+            const response = WelcomeMessage();
             ctx.reply(`${response}`);
-        })
+        });
+        BOT.command('web', (ctx) => {
+            ctx.reply(CommandsConstants.officialWeb);
+        });
+        BOT.command('discord', (ctx) => {
+            ctx.reply(CommandsConstants.discord);
+        });
+        BOT.command('whitepaper', (ctx) => {
+            ctx.reply(CommandsConstants.whitepaper);
+        });
         BOT.launch();
     }
     
