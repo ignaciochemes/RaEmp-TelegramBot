@@ -1,6 +1,10 @@
 import { Telegraf } from 'telegraf';
-import { WelcomeMessage } from '../Commands/HelpCommand';
-import { CommandsConstants } from '../Constants/CommandsConstants';
+import { DiscordInfoCommand } from '../Commands/Information/DiscordInfoCommand';
+import { HelpCommand } from '../Commands/HelpCommand';
+import { WebInfoCommand } from '../Commands/Information/WebInfoCommand';
+import MessageButtonResponse from "../Models/Response/MessageButtonResponse";
+import { WhitepaperInfoCommand } from '../Commands/Information/WhitepaperInfoCommand';
+import { BotRepoInfoCommand } from '../Commands/Information/BotRepoInfoCommand';
 
 export class TelegramBot {
     private static _instance: TelegramBot;
@@ -16,18 +20,35 @@ export class TelegramBot {
 
     async startTelegramBot() {
         const BOT = new Telegraf(`${process.env.BOT_TOKEN}`);
+        BOT.use(async(ctx, next) => {
+            const start = Number(new Date());
+            await next();
+            let ms: number = Number(new Date()) - start;
+            console.info('Response time: %sms', ms);
+        })
         BOT.help(ctx => {
-            const response = WelcomeMessage();
-            ctx.reply(`${response}`);
+            let response = HelpCommand();
+            ctx.replyWithMarkdown(response);
+        });
+        BOT.command('ayuda', (ctx) => {
+            let response = HelpCommand();
+            ctx.replyWithMarkdown(response);
         });
         BOT.command('web', (ctx) => {
-            ctx.reply(CommandsConstants.officialWeb);
+            const  response: MessageButtonResponse = WebInfoCommand();
+            ctx.reply(response.uri, response.buttons);
         });
         BOT.command('discord', (ctx) => {
-            ctx.reply(CommandsConstants.discord);
+            const response: MessageButtonResponse = DiscordInfoCommand();
+            ctx.reply(response.uri, response.buttons);
         });
         BOT.command('whitepaper', (ctx) => {
-            ctx.reply(CommandsConstants.whitepaper);
+            const response: MessageButtonResponse = WhitepaperInfoCommand();
+            ctx.reply(response.uri, response.buttons);
+        });
+        BOT.command('botrepo', (ctx) => {
+            const response: MessageButtonResponse = BotRepoInfoCommand();
+            ctx.reply(response.uri, response.buttons);
         });
         BOT.launch();
     }
