@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "REG",
+            "script": "dist/index.js",
+            "restart_delay": 10000
+        }
+    ]
+}
