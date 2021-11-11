@@ -1,4 +1,8 @@
-export const WelcomeMessage = () => {
-    let welcome: string = `Para ejecutar comandos ingrese el prefijo \`/\` y luego lo que desea buscar. Por ejemplo: \n /web \n /whitepaper \n /discord`;
-    return welcome;
+import * as path from 'path';
+import * as fs from 'fs';
+
+export const HelpCommand = () => {
+    let mdFile = path.resolve(__dirname, '../../../src/Md');
+    let readFile = fs.readFileSync(mdFile + '/HelpResponse.md', "utf8");
+    return readFile;
 }

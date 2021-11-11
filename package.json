@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start:prod": "set RET_ENV=prod&&node dist/index.js",
-    "start:dev": "set RET_ENV=local&&node dist/index.js",
+    "start:prod": "RET_ENV=prod node dist/index.js",
+    "start:dev": "RET_ENV=local node dist/index.js",
     "start:local": "nodemon -e ts --exec \"npm run build && npm run start:dev\"",
     "start:pm2": "npm run build && npm run pm2:start",
     "pm2:start": "pm2 start process.json",
     "pm2:stop": "pm2 stop process.json",
-    "pm2:delete": "pm2 delete process.json"
+    "pm2:delete": "pm2 delete process.json",
+    "start:prod:win": "set RET_ENV=prod&&node dist/index.js",
+    "start:dev:win": "set RET_ENV=local&&node dist/index.js",
+    "start:local:win": "nodemon -e ts --exec \"npm run build && npm run start:dev:win\""
   },
   "author": "Tato",
   "license": "ISC",
@@ -21,6 +24,7 @@
   },
   "dependencies": {
     "dotenv": "^10.0.0",
+    "mongoose": "^6.0.12",
     "telegraf": "^4.4.2"
   }
 }
