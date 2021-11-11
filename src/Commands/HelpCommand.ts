@@ -1,5 +1,4 @@
-export const HelpCommand = () => {
-    let number1 = 12312312;
-    let number2 = 312312;
-    return number1 + number2;
+export const WelcomeMessage = () => {
+    let welcome: string = `Para ejecutar comandos ingrese el prefijo \`/\` y luego lo que desea buscar. Por ejemplo: \n /web \n /whitepaper \n /discord`;
+    return welcome;
 }
