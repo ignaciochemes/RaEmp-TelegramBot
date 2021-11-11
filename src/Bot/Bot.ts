@@ -5,6 +5,7 @@ import { WebInfoCommand } from '../Commands/Information/WebInfoCommand';
 import MessageButtonResponse from "../Models/Response/MessageButtonResponse";
 import { WhitepaperInfoCommand } from '../Commands/Information/WhitepaperInfoCommand';
 import { BotRepoInfoCommand } from '../Commands/Information/BotRepoInfoCommand';
+import { TextConstants } from '../Constants/TextConstants';
 
 export class TelegramBot {
     private static _instance: TelegramBot;
@@ -25,6 +26,10 @@ export class TelegramBot {
             await next();
             let ms: number = Number(new Date()) - start;
             console.info('Response time: %sms', ms);
+        })
+        BOT.on('new_chat_members', async (ctx, next) => {
+            ctx.reply(`${ctx.update.message.new_chat_members[0].first_name}, ${TextConstants.welcomeMessage}`)
+            await next()
         })
         BOT.help(ctx => {
             let response = HelpCommand();
