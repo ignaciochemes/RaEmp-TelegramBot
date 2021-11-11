@@ -7,7 +7,11 @@
     "build": "tsc",
     "start:prod": "set RET_ENV=prod&&node dist/index.js",
     "start:dev": "set RET_ENV=local&&node dist/index.js",
-    "start:local": "nodemon -e ts --exec \"npm run build && npm run start:dev\""
+    "start:local": "nodemon -e ts --exec \"npm run build && npm run start:dev\"",
+    "start:pm2": "npm run build && npm run pm2:start",
+    "pm2:start": "pm2 start process.json",
+    "pm2:stop": "pm2 stop process.json",
+    "pm2:delete": "pm2 delete process.json"
   },
   "author": "Tato",
   "license": "ISC",
